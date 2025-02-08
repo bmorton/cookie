@@ -1,0 +1,10 @@
+module Cookie
+  module Models
+    class LoginResponse < BaseResponse
+      attr_reader token: String
+      attr_reader expired_in: Integer?
+
+      def initialize: (Hash[String, untyped]) -> void
+    end
+  end
+end

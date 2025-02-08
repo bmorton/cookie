@@ -1,0 +1,15 @@
+module Cookie
+  module Resources
+    class Login
+      attr_reader client: Cookie::Client
+
+      def initialize: (Cookie::Client client) -> void
+
+      def authenticate: (username: String, credential: String) -> Models::LoginResponse
+
+      private
+
+      def build_request_body: (String username, String credential) -> String
+    end
+  end
+end

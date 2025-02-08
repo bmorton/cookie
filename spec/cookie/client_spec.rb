@@ -3,36 +3,91 @@
 require "spec_helper"
 
 RSpec.describe Cookie::Client do
-  let(:api_key) { "test_key" }
-  let(:client) { described_class.new(api_key: api_key) }
+  let(:username) { "test@girlscouts.org" }
+  let(:credential) { "password123" }
+  let(:token) { "test-token" }
 
-  describe "#initialize" do
-    it "creates a client with an API key" do
-      expect(client.api_key).to eq(api_key)
+  describe ".authenticate" do
+    context "when successful" do
+      let(:response_body) do
+        {
+          type: "loginResponseTokenDTO",
+          errorCode: "",
+          errorMessage: "",
+          expired: false,
+          expiredIn: 43050,
+          token: token
+        }
+      end
+
+      before do
+        stub_request(:post, "#{described_class::BASE_URL}/login")
+          .with(
+            body: {
+              uid: username,
+              credential: credential,
+              client: "gsa_mobile_iOS"
+            }.to_json,
+            headers: {"Content-Type" => "application/json"}
+          )
+          .to_return(
+            status: 200,
+            headers: {"Content-Type" => "application/json"},
+            body: response_body.to_json
+          )
+      end
+
+      it "returns an authenticated client" do
+        client = described_class.authenticate(username: username, credential: credential)
+        expect(client).to be_a(described_class)
+        expect(client.connection.headers["Authorization"]).to eq("Bearer #{token}")
+      end
     end
 
-    it "sets a default adapter" do
-      expect(client.adapter).to eq(Faraday.default_adapter)
+    context "when authentication fails" do
+      let(:response_body) do
+        {
+          type: "loginResponseTokenDTO",
+          errorCode: "500",
+          errorMessage: "Oops! Your email or password is incorrect. Please try again.",
+          expired: false
+        }
+      end
+
+      before do
+        stub_request(:post, "#{described_class::BASE_URL}/login")
+          .to_return(
+            status: 200,
+            headers: {"Content-Type" => "application/json"},
+            body: response_body.to_json
+          )
+      end
+
+      it "raises an unauthorized error" do
+        expect {
+          described_class.authenticate(username: username, credential: credential)
+        }.to raise_error(Cookie::UnauthorizedError, response_body[:errorMessage])
+      end
     end
   end
 
-  describe "#connection" do
-    let(:connection) { client.connection }
-
-    it "creates a Faraday connection" do
-      expect(connection).to be_a(Faraday::Connection)
+  describe "#initialize" do
+    it "creates a client without an api key" do
+      client = described_class.new
+      expect(client.connection.headers["Authorization"]).to be_nil
     end
 
-    it "sets the Authorization header" do
-      expect(connection.headers["Authorization"]).to eq("Bearer #{api_key}")
+    it "creates a client with an api key" do
+      client = described_class.new(api_key: "test_key")
+      expect(client.connection.headers["Authorization"]).to eq("Bearer test_key")
     end
+  end
 
-    it "sets the Content-Type header" do
-      expect(connection.headers["Content-Type"]).to eq("application/json")
-    end
-
-    it "memoizes the connection" do
-      expect(client.connection).to eq(client.connection)
+  describe "#setup_authorization" do
+    it "sets the authorization header" do
+      client = described_class.new
+      client.setup_authorization("new_token")
+      expect(client.connection.headers["Authorization"]).to eq("Bearer new_token")
     end
   end
 end

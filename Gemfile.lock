@@ -3,6 +3,7 @@ PATH
   specs:
     cookie (0.1.0)
       faraday (~> 2.12)
+      json (~> 2.9)
 
 GEM
   remote: https://rubygems.org/
