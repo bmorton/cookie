@@ -1,0 +1,11 @@
+class Faraday
+  class Connection
+    def headers: () -> Hash[String, String]
+    def request: (Symbol name) -> void
+    def response: (Symbol name) -> void
+    def adapter: (Symbol adapter) -> void
+  end
+
+  def self.new: (?String? url) ?{ (Connection) -> void } -> Connection
+  def self.default_adapter: () -> Symbol
+end
