@@ -1,11 +1,21 @@
 class Faraday
   class Connection
+    def initialize: (?url: String?) ?{ (Connection) -> void } -> void
+    def post: (String, String) -> Response
     def headers: () -> Hash[String, String]
     def request: (Symbol name) -> void
     def response: (Symbol name) -> void
     def adapter: (Symbol adapter) -> void
   end
 
-  def self.new: (?String? url) ?{ (Connection) -> void } -> Connection
+  class Response
+    attr_reader body: Hash[String, String]
+    attr_reader status: Integer
+  end
+
+  class Error < StandardError
+  end
+
+  def self.new: (?url: String?) ?{ (Connection) -> void } -> Connection
   def self.default_adapter: () -> Symbol
 end

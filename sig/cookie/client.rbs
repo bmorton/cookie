@@ -2,13 +2,28 @@ module Cookie
   class Error < StandardError
   end
 
-  class Client
-    @connection: Faraday::Connection?
+  class UnauthorizedError < Error
+  end
 
-    attr_reader api_key: String
+  class AuthenticationError < Error
+  end
+
+  class ApiError < Error
+  end
+
+  class Client
+    BASE_URL: String
+
+    @api_key: String?
+    @connection: Faraday::Connection?
+    @login: Resources::Login?
+
     attr_reader adapter: Symbol
 
-    def initialize: (api_key: String, ?adapter: Symbol) -> void
+    def self.authenticate: (username: String, credential: String) -> Client
+    def initialize: (?api_key: String?, ?adapter: Symbol) -> void
+    def setup_authorization: (String) -> void
     def connection: () -> Faraday::Connection
+    def login: () -> Resources::Login
   end
 end

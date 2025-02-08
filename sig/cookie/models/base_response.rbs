@@ -1,0 +1,14 @@
+module Cookie
+  module Models
+    class BaseResponse
+      attr_reader type: String
+      attr_reader error_code: String?
+      attr_reader error_message: String?
+      attr_reader expired: bool
+
+      def initialize: (Hash[String, untyped] attributes) -> void
+      def error?: -> bool
+      def authentication_error?: -> bool
+    end
+  end
+end
