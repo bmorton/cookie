@@ -33,9 +33,12 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  # Uncomment to register a new dependency of your gem
-  # spec.add_dependency "example-gem", "~> 1.0"
+  spec.add_dependency "faraday", "~> 2.12"
 
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rbs", "~> 3.4"
+  spec.add_development_dependency "rspec", "~> 3.12"
+  spec.add_development_dependency "standard", "~> 1.3"
+  spec.add_development_dependency "steep", "~> 1.9"
+  spec.add_development_dependency "webmock", "~> 3.25"
 end

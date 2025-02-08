@@ -1,0 +1,14 @@
+module Cookie
+  class Error < StandardError
+  end
+
+  class Client
+    @connection: Faraday::Connection?
+
+    attr_reader api_key: String
+    attr_reader adapter: Symbol
+
+    def initialize: (api_key: String, ?adapter: Symbol) -> void
+    def connection: () -> Faraday::Connection
+  end
+end
