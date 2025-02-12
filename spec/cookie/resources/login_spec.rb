@@ -13,16 +13,7 @@ RSpec.describe Cookie::Resources::Login do
     subject(:authenticate) { login.authenticate(username: username, credential: credential) }
 
     context "when successful" do
-      let(:response_body) do
-        {
-          type: "loginResponseTokenDTO",
-          errorCode: "",
-          errorMessage: "",
-          expired: false,
-          expiredIn: 43050,
-          token: "test-token"
-        }
-      end
+      let(:response_body) { fixture("login/successful_response") }
 
       before do
         stub_request(:post, "#{Cookie::Client::BASE_URL}/login")
@@ -42,14 +33,7 @@ RSpec.describe Cookie::Resources::Login do
     end
 
     context "when credentials are invalid" do
-      let(:response_body) do
-        {
-          type: "loginResponseTokenDTO",
-          errorCode: "500",
-          errorMessage: "Oops! Your email or password is incorrect. Please try again.",
-          expired: false
-        }
-      end
+      let(:response_body) { fixture("login/invalid_credentials_response") }
 
       before do
         stub_request(:post, "#{Cookie::Client::BASE_URL}/login")
@@ -63,7 +47,7 @@ RSpec.describe Cookie::Resources::Login do
       it "raises an unauthorized error" do
         expect { authenticate }.to raise_error(
           Cookie::UnauthorizedError,
-          response_body[:errorMessage]
+          response_body["errorMessage"]
         )
       end
     end
