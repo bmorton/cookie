@@ -70,5 +70,10 @@ module Cookie
     def login
       @login ||= Resources::Login.new(self)
     end
+
+    # @return [Resources::Orders] The orders resource
+    def orders
+      @orders ||= Resources::Orders.new(self)
+    end
   end
 end

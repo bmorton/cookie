@@ -1,6 +1,7 @@
 class Faraday
   class Connection
     def initialize: (?url: String?) ?{ (Connection) -> void } -> void
+    def get: (String) -> Response
     def post: (String, String) -> Response
     def headers: () -> Hash[String, String]
     def request: (Symbol name) -> void
