@@ -18,7 +18,14 @@ gem install cookie
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+client = Cookie::Client.authenticate(
+  username: "juliette@example.com",
+  credential: "daisy"
+)
+
+client.orders.get_hand_delivery("troop-31337")
+```
 
 ## Development
 
