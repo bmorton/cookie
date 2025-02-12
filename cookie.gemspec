@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["brian@mmmhm.com"]
 
   spec.summary = "A Ruby client for the Girl Scouts DigitalCookie API"
-  spec.description = "Digital Cookie is the official platform for managing sales of Girl Scout cookies.  This client provides an excellent way to teach Girl Scouts about programming in a domain they are familiar with."
+  spec.description = "Cookie is a Ruby client for the Girl Scouts' DigitalCookie API, where sales of Girl Scout cookies are managed.  This client provides an excellent way to teach Girl Scouts about programming in a domain they are familiar with."
   spec.homepage = "https://github.com/bmorton/cookie"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
