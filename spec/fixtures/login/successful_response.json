@@ -1,0 +1,8 @@
+{
+  "type": "loginResponseTokenDTO",
+  "errorCode": "",
+  "errorMessage": "",
+  "expired": false,
+  "expiredIn": 43050,
+  "token": "test-token"
+}

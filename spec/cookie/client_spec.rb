@@ -9,16 +9,7 @@ RSpec.describe Cookie::Client do
 
   describe ".authenticate" do
     context "when successful" do
-      let(:response_body) do
-        {
-          type: "loginResponseTokenDTO",
-          errorCode: "",
-          errorMessage: "",
-          expired: false,
-          expiredIn: 43050,
-          token: token
-        }
-      end
+      let(:response_body) { fixture("login/successful_response") }
 
       before do
         stub_request(:post, "#{described_class::BASE_URL}/login")
@@ -45,14 +36,7 @@ RSpec.describe Cookie::Client do
     end
 
     context "when authentication fails" do
-      let(:response_body) do
-        {
-          type: "loginResponseTokenDTO",
-          errorCode: "500",
-          errorMessage: "Oops! Your email or password is incorrect. Please try again.",
-          expired: false
-        }
-      end
+      let(:response_body) { fixture("login/invalid_credentials_response") }
 
       before do
         stub_request(:post, "#{described_class::BASE_URL}/login")
@@ -66,7 +50,7 @@ RSpec.describe Cookie::Client do
       it "raises an unauthorized error" do
         expect {
           described_class.authenticate(username: username, credential: credential)
-        }.to raise_error(Cookie::UnauthorizedError, response_body[:errorMessage])
+        }.to raise_error(Cookie::UnauthorizedError, response_body["errorMessage"])
       end
     end
   end
