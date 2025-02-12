@@ -1,0 +1,36 @@
+module Cookie
+  module Models
+    class OrderResponse < BaseResponse
+      attr_reader can_view_details: bool
+      attr_reader total_order_count: Integer
+      attr_reader orders: Array[Order]
+
+      def initialize: (Hash[String, untyped]) -> void
+
+      class Order
+        attr_reader date_actioned: String
+        attr_reader number_purchased: Integer
+        attr_reader order_number: String
+        attr_reader order_time_display: String
+        attr_reader payment_address: PaymentAddress
+        attr_reader sales_application: String
+
+        def initialize: (Hash[String, untyped]) -> void
+
+        class PaymentAddress
+          attr_reader address_line1: String
+          attr_reader address_line2: String
+          attr_reader address_line3: String
+          attr_reader email: String
+          attr_reader first_name: String
+          attr_reader last_name: String
+          attr_reader phone_number: String
+          attr_reader town: String
+          attr_reader zip_code: String
+
+          def initialize: (Hash[String, untyped]) -> void
+        end
+      end
+    end
+  end
+end

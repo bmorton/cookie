@@ -1,0 +1,10 @@
+module Cookie
+  module Resources
+    class Orders
+      attr_reader client: Cookie::Client
+
+      def initialize: (Cookie::Client) -> void
+      def get_hand_delivery: (String troop_id) -> Models::OrderResponse
+    end
+  end
+end

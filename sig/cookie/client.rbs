@@ -17,6 +17,7 @@ module Cookie
     @api_key: String?
     @connection: Faraday::Connection?
     @login: Resources::Login?
+    @orders: Resources::Orders?
 
     attr_reader adapter: Symbol
 
@@ -24,6 +25,8 @@ module Cookie
     def initialize: (?api_key: String?, ?adapter: Symbol) -> void
     def setup_authorization: (String) -> void
     def connection: () -> Faraday::Connection
+
     def login: () -> Resources::Login
+    def orders: () -> Resources::Orders
   end
 end
