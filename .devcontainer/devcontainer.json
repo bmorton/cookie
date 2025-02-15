@@ -5,13 +5,16 @@
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   "image": "mcr.microsoft.com/devcontainers/typescript-node:0-20",
   "features": {
+    "ghcr.io/devcontainers/features/go:1": {
+      "version": "1.24.0"
+    },
+    "ghcr.io/devcontainers-extra/features/ruby-asdf:0": {
+      "version": "3.4.1"
+    },
     "ghcr.io/devcontainers/features/rust:1": {},
-    "ghcr.io/devcontainers/features/ruby:1": {}
+    "ghcr.io/devcontainers/features/sshd:1": {},
   },
   "overrideFeatureInstallOrder": ["ghcr.io/devcontainers/features/rust"]
-
-  // Features to add to the dev container. More info: https://containers.dev/features.
-  // "features": {},
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
