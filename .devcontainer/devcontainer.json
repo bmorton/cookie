@@ -1,50 +1,38 @@
 {
-  "name": "Ruby development",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "name": "Ruby Gem Development",
+  "image": "ruby:3.4.2-bookworm",
   "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {},
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "username": "vscode",
-      "userUid": 1001,
-      "userGid": 1001,
-      "installZsh": true,
-      "installOhMyZsh": true,
-      "configureZshAsDefaultShell": true,
-      "upgradePackages": true
-    },
-    "ghcr.io/rocker-org/devcontainer-features/apt-packages:1": {
-      "packages": "libpq-dev, libvips"
-    },
-    "ghcr.io/devcontainers/features/ruby:1": {
-      "version": "3.4.1"
-    },
-    "ghcr.io/devcontainers/features/node:1": {},
-    "ghcr.io/devcontainers-extra/features/zsh-plugins:0": {
-      "username": "vscode",
-      "plugins": "bundler rails ruby yarn git"
-    },
-    "ghcr.io/devcontainers/features/sshd:1": {
-      "version": "latest"
-    }
+    "ghcr.io/devcontainers/features/git:1": {}
   },
-
-  // Configure tool-specific properties.
   "customizations": {
     "vscode": {
-      "extensions": ["Shopify.ruby-lsp", "EditorConfig.EditorConfig"]
+      "extensions": [
+        "Shopify.ruby-lsp",
+        "rebornix.Ruby",
+        "wingrunr21.vscode-ruby"
+      ],
+      "settings": {
+        "ruby.useBundler": true,
+        "ruby.interpreter.commandPath": "ruby",
+        "ruby.useLanguageServer": true,
+        "rubyLsp.formatter": "rubocop",
+        "rubyLsp.enabledFeatures": {
+          "semanticHighlighting": true,
+          "diagnostics": true,
+          "documentHighlights": true,
+          "documentSymbols": true,
+          "foldingRanges": true,
+          "selectionRanges": true,
+          "formatting": true,
+          "onTypeFormatting": true
+        },
+        "ruby.lint": {
+          "rubocop": true
+        },
+        "ruby.format": "rubocop"
+      }
     }
   },
-
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // This can be used to network with other containers or the host.
-  "forwardPorts": [5433],
-
-  "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-
-  // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": ".devcontainer/boot",
-
+  "postCreateCommand": "gem install bundler && bundle install",
   "remoteUser": "vscode"
 }
